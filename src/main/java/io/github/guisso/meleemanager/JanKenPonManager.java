@@ -61,6 +61,11 @@ public final class JanKenPonManager {
 
     // Players and their scores
     private static List<AbstractPlayer> players;
+    
+    static {
+        playerAPreviousMove = Move.NONE;
+        playerBPreviousMove = Move.NONE;
+    }
 
     public static List<AbstractPlayer> loadPlayers()
             throws ClassNotFoundException, MalformedURLException, IOException,
@@ -127,6 +132,7 @@ public final class JanKenPonManager {
      *
      * @param playerA Player A
      * @param playerB Player B
+     * @return The result of the current melee
      */
     public static Result melee(AbstractPlayer playerA, AbstractPlayer playerB) {
         Move playerAMove = playerA.makeMyMove(playerBPreviousMove);
@@ -144,7 +150,12 @@ public final class JanKenPonManager {
 
         playerAPreviousMove = playerAMove;
         playerBPreviousMove = playerBMove;
-        currentTurn++;
+
+        if (++currentTurn >= TURNS) {
+            currentTurn = 0;
+            playerAPreviousMove = Move.NONE;
+            playerBPreviousMove = Move.NONE;
+        }
 
         return result == null ? Result.NONE : result;
     }
