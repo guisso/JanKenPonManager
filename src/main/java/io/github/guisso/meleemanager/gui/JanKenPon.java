@@ -52,9 +52,9 @@ public class JanKenPon
 
     private static int currentMelee;
     private static int totalMelees;
-    private static AbstractPlayer[][] melees; //??
+    private static AbstractPlayer[][] melees;
 
-    public static final int MAX_TURNS = 200;
+    public static final int MAX_TURNS = JanKenPonManager.TURNS;
     private static int currentTurn;
 
     private List<AbstractPlayer> players;
@@ -339,6 +339,7 @@ public class JanKenPon
                     lblPlayerBScore.setText("---");
                     lblCurrentTurn.setIcon(Result.SCISSORS_SCISSORS_TIE.IMAGE);
 
+                    // Log
                     for (AbstractPlayer player : players) {
                         System.out.println(player);
                     }
@@ -398,8 +399,7 @@ public class JanKenPon
 //                playersListModel.notifyDataUpdate();
 
                 // Next turn
-                currentTurn++;
-                if (currentTurn >= MAX_TURNS) {
+                if (++currentTurn >= MAX_TURNS) {
                     currentTurn = 0;
                     currentMelee++;
                     Move.resetConsecutiveWins();
